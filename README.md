@@ -1,6 +1,7 @@
 # STM32F042F6P6-PMW3360DM_HID-Mouse
 
 > software: keil 5
+
 > hardware: 
 1. MCU: stm32f042
 2. Sensor: pmww3360-dM
