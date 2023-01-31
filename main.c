@@ -41,7 +41,7 @@
 #include "usbd_hid.h"
 
 #include "Mouse_Run_All-in-One.h"
-#include "srom_3360_0x04.h"
+#include "srom_3360_0x05.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -103,7 +103,7 @@ void Mouse_Send(uint8_t buf0,uint8_t buf1,uint8_t buf2,uint8_t buf3)
   {
 		USBD_HID_SendReport(&hUsbDeviceFS, Mouse_Buffer,4);
 	}
-	b_buttons_prev = b_buttons;	//用于下次按键状态改变与数据发送的判定
+	b_buttons_prev = b_buttons;	//鐢ㄤ簬涓嬫鎸夐敭鐘舵�佹敼鍙樹笌鏁版嵁鍙戦�佺殑鍒ゅ畾
 	dx = 0;
 	dy = 0;
 }
@@ -195,8 +195,8 @@ int main(void)
 		{
 			_whl = 2 * (whl_a ^ whl_prev_diff) - 1;
 			whl -= _whl;
-			// whl -= _whl：sroll forward up, sroll back down;
-			// whl += _whl：sroll forward down, sroll back up;
+			// whl -= _whl锛歴roll forward up, sroll back down;
+			// whl += _whl锛歴roll forward down, sroll back up;
 			whl_prev_same = whl_a;
 		}
 
