@@ -40,7 +40,7 @@ part of project code post on my gayhub: https://github.com/Ghost-Girls/
 		 
 	3.1. Mouse MCU/SOC (wireless transfer) -> wireless receiver(chipset) ->: encoder and decoder might Increase latency, there is some overhead for wireless too.
 		 
-	3.2. Mouse MCU/SOC -> USB Port(chipset) -> CPU (not CPU interrupt, is Event traversal): using Mousetest or Mousetester or other software to analyze mouse 		latency is inaccuracy.
+	3.2. Mouse MCU/SOC -> USB Port(chipset) -> CPU (not CPU interrupt, is Event traversal): using Mousetest or Mousetester or other software to analyze mouse latency is inaccuracy.
 	the software read data before the CPU process, not just from the usb port.
 	if you wanna get the accuracy data from USB, "USB protocol analyzer or an instrumented LDAT (i.e. not the screen-capture method)"(from: Razer R&D) is the best.
 	(https://www.reddit.com/r/MouseReview/comments/1189q53/introducing_daves_cousin_the_razer_deathadder_v3/j9gdlo1/?context=3). 
