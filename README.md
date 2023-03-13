@@ -13,6 +13,7 @@ M0 core MCU is not enough for mouse sensor!
 If you wanna find a TSSOP20 package, I recommend CH32V305FBT6, 144Mhz and HS USB 2.0 olny pay for $2；
 	
 you can download full project from: https://pan.baidu.com/s/1XnpNVsO6pANIwLP8uDlTRA?pwd=3378 
+
 part of project code post on my gayhub: https://github.com/Ghost-Girls/
 
 ******************************************************************************
@@ -65,9 +66,14 @@ oscilloscope or USB protocol analyzer!
 
 ******************************************************************************
 Mouse just a Office consumables.
+
 鼠标只是一个办公耗材！
+
 latency it's just data, not your experience of mouse.
+
 延迟只是个数字，并不能代表你的实际体验！
+
 where shoes are feet, only they know.
+
 鞋子合不合脚只有自己知道！
 
