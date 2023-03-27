@@ -42,21 +42,21 @@ extern "C" {
   * @{
   */
 #define HID_EPIN_ADDR                 0x81U
-#define HID_EPIN_SIZE                 0x04U
+#define HID_EPIN_SIZE                 0x06U
 
 #define USB_HID_CONFIG_DESC_SIZ       34U
 #define USB_HID_DESC_SIZ              9U
-#define HID_MOUSE_REPORT_DESC_SIZE    74U
+#define HID_MOUSE_REPORT_DESC_SIZE    69U
 
 #define HID_DESCRIPTOR_TYPE           0x21U
 #define HID_REPORT_DESC               0x22U
 
 #ifndef HID_HS_BINTERVAL
-#define HID_HS_BINTERVAL            0x01U
+#define HID_HS_BINTERVAL            0x07U
 #endif /* HID_HS_BINTERVAL */
 
 #ifndef HID_FS_BINTERVAL
-#define HID_FS_BINTERVAL            0x01U
+#define HID_FS_BINTERVAL            0x0AU
 #endif /* HID_FS_BINTERVAL */
 
 #define HID_REQ_SET_PROTOCOL          0x0BU
