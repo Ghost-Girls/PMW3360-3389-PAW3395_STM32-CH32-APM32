@@ -52,6 +52,8 @@ mouse Byte 1 have 8bit: 00011111
 #define MOUSE_BACK		0x02	//PA3	//2
 #define MOUSE_FORWARD 0x01	//PB4 //1
 
+#define CPI_Page_Address 0x08007000	
+#define Polling_Skip_Page_Address 0x08007400
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -99,11 +101,11 @@ void sensor_config(void) // Sensor Power-up configure
   // dpi settings CPI/CPI
 	uint8_t dpi;
 	
-	old_profile = ((*(__IO uint16_t*)(0x08007000)) < 0xFF) ? *(__IO uint16_t*)(0x08007000) : 0x00;
+	old_profile = ((*(__IO uint16_t*)(0x08007000)) < 0xFF) ? *(__IO uint16_t*)(0x08007000) : 0x01;
 	if (old_profile == 0x00)
-		dpi = 0x07;// dpi = (1 + i) * 100
-	if (old_profile == 0x01)
 		dpi = 0x03;// dpi = (1 + i) * 100
+	if (old_profile == 0x01)
+		dpi = 0x07;// dpi = (1 + i) * 100
 	if (old_profile == 0x02)
 		dpi = 0x0f;// dpi = (1 + i) * 100
 
@@ -152,7 +154,7 @@ static void pmw3360_set_dpi(uint16_t profile,uint8_t dpi) // mouse dpi set
 	spi_write(0x0f, dpi);
 	spi_write(0x50, 0x00); // return to burst_motion mode
 	SS_HIGH;
-	InternalFlash_Write(profile);// write dpi profile to Flash.
+	Internal_Flash_Write(CPI_Page_Address,profile);	// write dpi profile to Flash.
 }
 
 uint8_t wheel_encoder_input(void) // read wheel sroll
@@ -196,22 +198,22 @@ void polling_rate_change(uint16_t config)
 			if (config == 0) 			// 1000hz
 			{
 				skip = 1;
-				Internal_Flash_Write(skip,0x08007400);
+				Internal_Flash_Write(Polling_Skip_Page_Address,skip);
 			}
 			else if (config == 1) // 500Hz
 			{
 				skip = 3;
-				Internal_Flash_Write(skip,0x08007400);
+				Internal_Flash_Write(Polling_Skip_Page_Address,skip);
 			}
 			else if (config == 3) // 250hz
 			{
 				skip = 7;
-				Internal_Flash_Write(skip,0x08007400);
+				Internal_Flash_Write(Polling_Skip_Page_Address,skip);
 			}
 			else if (config == 7)	// 125hz
 			{
 				skip = 0;
-				Internal_Flash_Write(skip,0x08007400);
+				Internal_Flash_Write(Polling_Skip_Page_Address,skip);
 			}
 		}
 
@@ -241,7 +243,7 @@ void burst_read(void)	// read sensor move
 
 //    int squal = SPI_Send(0x00);
 		SS_HIGH;
- //   HAL_Delay_us(1); 
+ //   HAL_Delay_us(1); // pulling high at lest 500ns
 	
 		x.sum += delta_x.sum;
 		y.sum += delta_y.sum;
@@ -749,20 +751,19 @@ unsigned char SPI_Send(unsigned char Txdata)
 // data_out: receive data
 static uint8_t spi_transmit_receive(uint8_t data_in, uint8_t *data_out) 
 {
-//	int state = 0;
-	*data_out = 0;
 	uint32_t timeout_cnt;
-//	static const uint32_t timeout_cnt_num;
 
 	// Wait until TXE flag is set to send data
 	timeout_cnt = 0;
 	static const uint32_t timeout_cnt_num_send = 100;
-	while(!LL_SPI_IsActiveFlag_TXE(SPI1)) //Tx非空，有数据
+	// Tx buffer not empty set 0;
+
+	while(!LL_SPI_IsActiveFlag_TXE(SPI1))	//Tx非空，有数据
 	{
 		timeout_cnt ++;
-		if((timeout_cnt > timeout_cnt_num_send)||(LL_SPI_IsActiveFlag_TXE(SPI1)))	//Tx空，有数据
+		// Tx buffer empty set 1;
+		if((timeout_cnt > timeout_cnt_num_send)||(LL_SPI_IsActiveFlag_TXE(SPI1)))	//Tx空，无数据
 		{
-//			state = -1;
 			break;
 		}
 	}
@@ -773,12 +774,14 @@ static uint8_t spi_transmit_receive(uint8_t data_in, uint8_t *data_out)
 	// Check BSY flag
 	timeout_cnt = 0;
 	static const uint32_t timeout_cnt_num_busy = 50;
-	while(LL_SPI_IsActiveFlag_BSY(SPI1))
+
+	// SPI_Busy set 1
+	while(LL_SPI_IsActiveFlag_BSY(SPI1))	// SPI_Busy
 	{
 		timeout_cnt ++;
-		if((timeout_cnt > timeout_cnt_num_busy)||(!LL_SPI_IsActiveFlag_BSY(SPI1)))
+        // SPI_Not_Busy set 0
+		if((timeout_cnt > timeout_cnt_num_busy)||(!LL_SPI_IsActiveFlag_BSY(SPI1))) // SPI_Not_Busy
 		{
-//			state = -1;
 			break;
 		}
 	}
@@ -786,12 +789,14 @@ static uint8_t spi_transmit_receive(uint8_t data_in, uint8_t *data_out)
 	// Check RXNE flag
 	timeout_cnt = 0;
 	static const uint32_t timeout_cnt_num_recv = 200;
-	while(!LL_SPI_IsActiveFlag_RXNE(SPI1)) //Rx空
+
+    // Rx buffer empty, set 0;
+	while(!LL_SPI_IsActiveFlag_RXNE(SPI1))
 	{
 		timeout_cnt ++;
-		if((timeout_cnt > timeout_cnt_num_recv)||(!LL_SPI_IsActiveFlag_RXNE(SPI1)))//Rx非空
+		// Rx buffer not empty set 1;
+		if((timeout_cnt > timeout_cnt_num_recv)||(LL_SPI_IsActiveFlag_RXNE(SPI1)))//Rx非空
 		{
-//			state = -1;
 			break;
 		}
 	}

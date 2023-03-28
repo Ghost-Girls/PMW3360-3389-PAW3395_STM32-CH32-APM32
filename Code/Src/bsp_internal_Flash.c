@@ -33,34 +33,17 @@
   * @param  None
   * @retval None
   */
-void InternalFlash_Write(uint16_t Data)
-{
-//	uint16_t Data = 0x0001;
-	uint32_t Address = 0x08007000;
-	uint32_t PageError = 0;
-	FLASH_EraseInitTypeDef CPI_Profile;
-	CPI_Profile.TypeErase = FLASH_TYPEERASE_PAGES;
-	CPI_Profile.PageAddress = Address;
-	CPI_Profile.NbPages = 1;				//记录写入多少页
-
-	HAL_FLASH_Unlock();
-	HAL_FLASHEx_Erase(&CPI_Profile, &PageError);
-  HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, Address, Data);
-	FLASH_WaitForLastOperation(10);
- 	HAL_FLASH_Lock();
-}
-
-void Internal_Flash_Write(uint16_t Data,uint32_t Address)
+void Internal_Flash_Write(uint32_t Page_Address,uint16_t Data)
 {
 	uint32_t PageError = 0;
-	FLASH_EraseInitTypeDef CPI_Profile;
-	CPI_Profile.TypeErase = FLASH_TYPEERASE_PAGES;
-	CPI_Profile.PageAddress = Address;
-	CPI_Profile.NbPages = 1;				//记录写入多少页
+	FLASH_EraseInitTypeDef Profile;
+	Profile.TypeErase = FLASH_TYPEERASE_PAGES;
+	Profile.PageAddress = Page_Address;
+	Profile.NbPages = 1;				//记录写入多少页
 
 	HAL_FLASH_Unlock();
-	HAL_FLASHEx_Erase(&CPI_Profile, &PageError);
-  HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, Address, Data);
+	HAL_FLASHEx_Erase(&Profile, &PageError);
+  HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, Page_Address, Data);
 	FLASH_WaitForLastOperation(10);
  	HAL_FLASH_Lock();
 }
