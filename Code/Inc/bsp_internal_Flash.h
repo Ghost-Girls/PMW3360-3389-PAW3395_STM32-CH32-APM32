@@ -3,7 +3,6 @@
 
 #include "stm32f0xx_hal.h"
 
-void InternalFlash_Write(uint16_t Data);
-void Internal_Flash_Write(uint16_t Data,uint32_t Address);
+void Internal_Flash_Write(uint32_t Page_Address,uint16_t Data);
 #endif /* __INTERNAL_FLASH_H */
 
