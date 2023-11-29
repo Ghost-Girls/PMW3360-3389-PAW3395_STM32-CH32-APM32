@@ -1,6 +1,5 @@
-## you need to open with RAW button!
-
 # PMW3360-3389-PAW3395_STM32-CH32-APM32
+## you need to open with RAW button!
 This is my ACFUN Home page: https://www.acfun.cn/u/7503062
 
 
