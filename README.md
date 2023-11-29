@@ -10,12 +10,8 @@ This is my ACFUN Home page: https://www.acfun.cn/u/7503062
 3. five buttons with hardware debounce
 4. Encoder
 
-Mouse Timing Diagram:
-|SOF|<------------------------------(last frame)-------------------------------------------->|SOF|<------------------------------(next frame)--------------------------------------------->|SOF|
----->|timer satart|<------------(about 77us)------->|timer stop|-----------------------------|--->|timer satart|<------------(about 77us)------->|timer stop|------------------------------>
------------------>|USB send data|------------------------------|-----------------------------|---------------->|USB send data|------------------------------|------------------------------>
--------------------------------------------------------------->|get SPI data|----------------|------------------------------------------------------------->|get SPI data|----------------->
---------------------------------------------------------------------------->|key/encoder scan|--------------------------------------------------------------------------->|key/encoder scan|
+![Uploading mouse diagram.png…]()
+
 
 1. SOF number change, mean this a new USB frame, and then start timer stick about 77us, couse the PMW3360 SPI clock is 2Mbps, PAW3395 might be count stick about 10us, HAL lib might have huge send interval!
 2. Get datas at last frame end, USB send datas at current frame begin.
