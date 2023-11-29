@@ -9,9 +9,9 @@ This is my ACFUN Home page: https://www.acfun.cn/u/7503062
 2. Sensor: PMW3360-DM\PMW3389-DM\PAW3395
 3. five buttons with hardware debounce
 4. Encoder
-
-[[![Uploading mouse diagram.png…]()](https://github.com/Ghost-Girls/PMW3360-3389-PAW3395_STM32-CH32-APM32/blob/main/mouse%20diagram.png)](https://github.com/Ghost-Girls/PMW3360-3389-PAW3395_STM32-CH32-APM32/blob/main/mouse%20diagram.png)
-
+<div align="center">
+  <img src="[https://github.com/******/dbscan_clustering_algorithm/blob/master/data/DBSCAN.png](https://github.com/Ghost-Girls/PMW3360-3389-PAW3395_STM32-CH32-APM32/blob/main/mouse%20diagram.png)">
+</div>
 
 1. SOF number change, mean this a new USB frame, and then start timer stick about 77us, couse the PMW3360 SPI clock is 2Mbps, PAW3395 might be count stick about 10us, HAL lib might have huge send interval!
 2. Get datas at last frame end, USB send datas at current frame begin.
