@@ -12,6 +12,7 @@ This is my ACFUN Home page: https://www.acfun.cn/u/7503062
 <div align="center">
   <img src="https://github.com/******/dbscan_clustering_algorithm/blob/master/data/DBSCAN.png](https://github.com/Ghost-Girls/PMW3360-3389-PAW3395_STM32-CH32-APM32/blob/main/mouse%20diagram.png)">
 </div>
+![image text]([https://github.com/******/dbscan_clustering_algorithm/blob/master/data/dbscan_performance_comparison.png](https://github.com/******/dbscan_clustering_algorithm/blob/master/data/DBSCAN.png](https://github.com/Ghost-Girls/PMW3360-3389-PAW3395_STM32-CH32-APM32/blob/main/mouse%20diagram.png) "DBSCAN Performance Comparison")
 
 1. SOF number change, mean this a new USB frame, and then start timer stick about 77us, couse the PMW3360 SPI clock is 2Mbps, PAW3395 might be count stick about 10us, HAL lib might have huge send interval!
 2. Get datas at last frame end, USB send datas at current frame begin.
